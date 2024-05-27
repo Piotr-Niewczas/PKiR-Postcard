@@ -12,6 +12,7 @@ public class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddSignalR();
 
         var app = builder.Build();
 
@@ -24,10 +25,12 @@ public class Program
 
         app.UseHttpsRedirection();
 
-        app.UseAuthorization();
+       // app.UseAuthorization();
 
 
         app.MapControllers();
+
+       app.MapHub<PostcardHub>("hubs/postcard");
 
         app.Run();
     }
