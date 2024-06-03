@@ -13,4 +13,11 @@ public class PostcardHub : Hub
     {
         await Clients.All.SendAsync("ReceiveMessage",  message);
     }
+    
+    public async Task GetGreet(string name)
+    {
+        
+        
+        await Clients.All.SendAsync("ReceiveMessage",  name);
+    }
 }
