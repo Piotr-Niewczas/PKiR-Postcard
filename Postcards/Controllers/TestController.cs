@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 
-namespace Postcard.Controllers;
+namespace Postcards.Controllers;
 [ApiController]
 [Route("[controller]")]
 public class TestController : ControllerBase

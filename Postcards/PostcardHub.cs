@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace Postcard;
+namespace Postcards;
 
 public class PostcardHub : Hub
 {

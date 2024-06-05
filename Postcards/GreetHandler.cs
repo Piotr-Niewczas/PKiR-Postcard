@@ -1,7 +1,7 @@
 ﻿using Grpc.Net.Client;
 using Postcard_gRPC;
 
-namespace Postcard;
+namespace Postcards;
 
 public class GreetHandler
 {

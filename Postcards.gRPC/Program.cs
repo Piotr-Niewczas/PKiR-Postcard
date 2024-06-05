@@ -1,6 +1,6 @@
-using Postcard_gRPC.Services;
+using Postcards.gRPC.Services;
 
-namespace Postcard_gRPC;
+namespace Postcards.gRPC;
 
 public class Program
 {

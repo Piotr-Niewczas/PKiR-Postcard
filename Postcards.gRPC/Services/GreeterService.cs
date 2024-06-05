@@ -1,7 +1,8 @@
 using Grpc.Core;
 using Postcard_gRPC;
+using Postcards.gRPC;
 
-namespace Postcard_gRPC.Services;
+namespace Postcards.gRPC.Services;
 
 public class GreeterService : Greeter.GreeterBase
 {
