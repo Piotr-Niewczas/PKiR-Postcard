@@ -1,20 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore;
 using Postcards.Models;
 
 namespace Postcards.gRPC.Data;
 
-public class AppDbContext(IConfiguration configuration) : DbContext
+public class AppDbContext(DbContextOptions options) : DbContext(options)
 {
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
-    }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        
-    }
-
     public DbSet<Postcard> Postcards { get; set; }
     
 }

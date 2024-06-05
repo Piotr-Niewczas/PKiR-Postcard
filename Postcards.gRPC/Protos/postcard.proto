@@ -7,7 +7,7 @@ package postcard;
 // The postcard service definition.
 service PostcardService {
   // Requests the generation of a personalized postcard
-  rpc GeneratePostcard (PostcardRequest) returns (PostcardResponse);
+  rpc GeneratePostcardRequest (PostcardRequest) returns (PostcardResponse);
 }
 
 // The request message containing the prompt and the user's ID.

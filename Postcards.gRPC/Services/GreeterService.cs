@@ -1,6 +1,5 @@
 using Grpc.Core;
 using Postcard_gRPC;
-using Postcards.gRPC;
 
 namespace Postcards.gRPC.Services;
 
