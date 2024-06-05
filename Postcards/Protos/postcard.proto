@@ -1,0 +1,22 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Postcard_gRPC";
+
+package postcard;
+
+// The postcard service definition.
+service PostcardService {
+  // Requests the generation of a personalized postcard
+  rpc GeneratePostcardRequest (PostcardRequest) returns (PostcardResponse);
+}
+
+// The request message containing the prompt and the user's ID.
+message PostcardRequest {
+  string prompt = 1;
+  string userId = 2;
+}
+
+// The response message containing the status of the request.
+message PostcardResponse {
+  string status = 1;
+}

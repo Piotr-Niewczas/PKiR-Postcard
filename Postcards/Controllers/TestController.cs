@@ -13,4 +13,13 @@ public class TestController : ControllerBase
         
         return Ok( response);
     }
+    
+    [HttpPost]
+    public async Task<IActionResult> Post(string prompt, string userId)
+    {
+        var response = await new PostcardRequestHandler().AddPostcard(prompt, userId);
+        
+        return Ok(response);
+    }
+
 }
