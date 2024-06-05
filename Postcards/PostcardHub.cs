@@ -20,4 +20,11 @@ public class PostcardHub : Hub
         
         await Clients.All.SendAsync("ReceiveMessage",  name);
     }
+    
+    public async Task AddPostcard(string prompt, string userId)
+    {
+        var response = await new PostcardRequestHandler().AddPostcard(prompt, userId);
+        
+        await Clients.Caller.SendAsync("ReceiveMessage", "System", response);
+    }
 }
