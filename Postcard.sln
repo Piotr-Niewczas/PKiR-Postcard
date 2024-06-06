@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postcards.gRPC", "Postcards
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postcards.Models", "Postcards.Models\Postcards.Models.csproj", "{B51325C7-226B-4604-BF5F-588AB9DB798F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postcards.Worker", "Postcards.Worker\Postcards.Worker.csproj", "{CF3CB62B-C11D-4FF1-BDDE-FD6B77C0F7A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{B51325C7-226B-4604-BF5F-588AB9DB798F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B51325C7-226B-4604-BF5F-588AB9DB798F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B51325C7-226B-4604-BF5F-588AB9DB798F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF3CB62B-C11D-4FF1-BDDE-FD6B77C0F7A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF3CB62B-C11D-4FF1-BDDE-FD6B77C0F7A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF3CB62B-C11D-4FF1-BDDE-FD6B77C0F7A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF3CB62B-C11D-4FF1-BDDE-FD6B77C0F7A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
