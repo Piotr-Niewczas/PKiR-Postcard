@@ -1,0 +1,96 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.SignalR.Client
+@inject IConfiguration Configuration
+
+
+<PageTitle>Home</PageTitle>
+
+@if (!_isUserLoggedIn)
+{
+    <label for="username">Input user name</label>
+    <InputText id="username" @bind-Value="_userName"/>
+    <button @onclick="Login"> Login </button>
+}
+
+@if (_isUserLoggedIn)
+{
+    @if(_isGeneratingPostcard)
+    {
+        <div class="loader"></div>
+        <p>Generating postcard...</p>
+        <p>This may take a while</p>
+    }
+    else
+    {
+        <h1>Welcome, @_userName!</h1>
+        <p> Please input thr prompt to generate a postcard:</p>
+        <label for="prompt">Input user name</label>
+        <InputText id="prompt" @bind-Value="_prompt"/>
+        <button @onclick="GeneratePostcard"> Generate </button>
+    }
+    
+}
+
+
+@code{
+
+    bool _isUserLoggedIn;
+    string _userName = "";
+
+    string _prompt = "";
+    bool _isGeneratingPostcard;
+    
+    private HubConnection? _hubConnection;
+    private List<string> _messages = [];
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("Initializing hub connection");
+        _hubConnection = new HubConnectionBuilder()
+            .WithUrl($"{Configuration["mainApiUrl"]}/hubs/postcard" ?? throw new InvalidOperationException("Missing mainApiUrl in appsettings.json"), options =>
+            {
+                options.Headers.Add("Access-Control-Allow-Origin", "*");
+            })
+            .Build();
+        
+        Console.WriteLine("Setting up hub connection");
+        
+        _hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
+        {
+            var encodedMsg = $"{user}: {message}";
+            Console.WriteLine(encodedMsg);
+            _messages.Add(encodedMsg);
+            InvokeAsync(StateHasChanged);
+        });
+
+        await _hubConnection.StartAsync();
+        Console.WriteLine("Hub connection started");
+    }
+    
+    async Task Login()
+    {
+        if (_hubConnection is not null)
+        {
+            await _hubConnection.SendAsync("AddToGroup", _userName);
+            Console.WriteLine($"User {_userName} logged in");
+            _isUserLoggedIn = true;
+        }
+        else
+        {
+            Console.WriteLine("Hub connection is null");
+        }
+    }
+    
+    async Task GeneratePostcard()
+    {
+        if (_hubConnection is not null)
+        {
+            Console.WriteLine($"Generating postcard with prompt: {_prompt}");
+            _isGeneratingPostcard = true;
+            await _hubConnection.SendAsync("AddPostcard", _prompt, _userName);
+        }
+        else
+        {
+            Console.WriteLine("Hub connection is null");
+        }
+    }
+}

@@ -37,4 +37,8 @@
       </Protobuf>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Postcards.Models\Postcards.Models.csproj" />
+    </ItemGroup>
+
 </Project>

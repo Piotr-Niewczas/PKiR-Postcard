@@ -6,6 +6,18 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAllOrigins",
+                builder =>
+                {
+                    builder
+                        .AllowAnyOrigin() 
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+        });
+        
         // Add services to the container.
 
         builder.Services.AddControllers();
@@ -21,6 +33,8 @@ public class Program
 
         var app = builder.Build();
 
+        app.UseCors("AllowAllOrigins");
+        
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {

@@ -38,7 +38,7 @@ public class PostcardGeneratorWorkerService(
                 }
 
                 // Add the postcard to the list of successfully updated postcards
-                successfullyUpdated.Add(postcard);
+                successfullyUpdated.Add(updateResult.Value);
 
                 logger.LogInformation("Generated postcard {PostcardId} with prompt {Prompt}", postcard.Id,
                     postcard.Prompt);
@@ -48,7 +48,7 @@ public class PostcardGeneratorWorkerService(
             {
                 // Notify core project about the updated postcards
                 var notifyResult =
-                    await updateNotifier.SendUpdateNotification(successfullyUpdated.Select(p => p.Id).ToList());
+                    await updateNotifier.SendUpdateNotification(successfullyUpdated);
                 if (notifyResult.IsError)
                 {
                     logger.LogError("Failed to send update notification: {Error}", notifyResult.Errors.ToString());
