@@ -41,7 +41,7 @@ public class PostcardHub(ILogger<PostcardHub> logger, IPostcardRequestHandler po
 
     private async Task SendUpdateNotificationToClient(Postcard postcard)
     {
-        await Clients.Group(postcard.UserId).SendAsync("ReceiveMessage", postcard.Id.ToString() , $"has been updated: {postcard.ImageUrl} link");
+        await Clients.Group(postcard.UserId).SendAsync("ReceiveFullPostcard", postcard);
     }
     
     public async Task AddToGroup(string userId)
