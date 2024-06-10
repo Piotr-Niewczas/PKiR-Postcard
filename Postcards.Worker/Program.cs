@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.EntityFrameworkCore;
 using Postcards.Worker.Data;
 
@@ -14,7 +15,13 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        builder.Services.AddSingleton<HubConnection>(
+            _ => new HubConnectionBuilder()
+            .WithUrl( builder.Configuration["mainServiceUrl"] + "/hubs/postcard")
+            .Build());
+
         builder.Services.AddTransient<PostcardRepository>();
+        builder.Services.AddTransient<IUpdateNotifier, SignalRUpdateNotifier>();
         builder.Services.AddTransient<IPostcardGenerator, DummyPostcardGenerator>();
         
         // // Read the OpenAI API key from a file
@@ -36,7 +43,7 @@ public class Program
         //     Environment.Exit(1);
         // }
         // // Register the DallEPostcardGenerator as a service
-        // builder.Services.AddScoped<IPostcardGenerator>(serviceProvider =>
+        // builder.Services.AddTransient<IPostcardGenerator>(serviceProvider =>
         // {
         //     var logger = serviceProvider.GetRequiredService<ILogger<DallEPostcardGenerator>>();
         //     return new DallEPostcardGenerator(logger, apiKey);

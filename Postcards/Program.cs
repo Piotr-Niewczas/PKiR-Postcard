@@ -13,6 +13,11 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddSignalR();
+        builder.Services.AddSingleton<IPostcardRequestHandler>(
+            new PostcardRequestHandler(builder.Configuration["grpcAddress"] ??
+                                       throw new InvalidOperationException(
+                                           "grpcAddress is not set in appsettings.json")));
+
 
         var app = builder.Build();
 
@@ -25,12 +30,12 @@ public class Program
 
         app.UseHttpsRedirection();
 
-       // app.UseAuthorization();
+        // app.UseAuthorization();
 
 
         app.MapControllers();
 
-       app.MapHub<PostcardHub>("hubs/postcard");
+        app.MapHub<PostcardHub>("hubs/postcard");
 
         app.Run();
     }

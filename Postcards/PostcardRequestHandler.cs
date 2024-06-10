@@ -3,11 +3,11 @@ using Postcard_gRPC;
 
 namespace Postcards;
 
-public class PostcardRequestHandler
+public class PostcardRequestHandler(string grpcAddress) : IPostcardRequestHandler
 {
     public async Task<string> AddPostcard(string prompt, string userId)
     {
-        var channel = GrpcChannel.ForAddress("http://localhost:5231/");
+        var channel = GrpcChannel.ForAddress(grpcAddress);
         var client = new PostcardService.PostcardServiceClient(channel);
         
         var request = new PostcardRequest { Prompt = prompt, UserId = userId };

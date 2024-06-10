@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Postcards.Controllers;
 [ApiController]
 [Route("[controller]")]
-public class TestController : ControllerBase
+public class TestController(IPostcardRequestHandler postcardRequestHandler) : ControllerBase
 {
     [HttpGet(template:"{name}", Name = "gRPC Test")]
     public async Task<IActionResult> Get(string name)
@@ -17,7 +17,7 @@ public class TestController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post(string prompt, string userId)
     {
-        var response = await new PostcardRequestHandler().AddPostcard(prompt, userId);
+        var response = await postcardRequestHandler.AddPostcard(prompt, userId);
         
         return Ok(response);
     }
