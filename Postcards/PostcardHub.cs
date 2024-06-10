@@ -38,10 +38,14 @@ public class PostcardHub(ILogger<PostcardHub> logger, IPostcardRequestHandler po
         logger.LogInformation("All update notifications sent to front clients");
     }
 
-    private async Task SendUpdateNotificationToClients(int postcardId, string connectionId)
+    private async Task SendUpdateNotificationToClients(int postcardId, string userId)
     {
-        // what if SendAsync fails?
-        await Clients.All.SendAsync("ReceiveMessage",  postcardId , "has been updated"); // change to send to specific client
+        await Clients.Group(userId).SendAsync("ReceiveMessage", postcardId , "has been updated");
+    }
+    
+    public async Task AddToGroup(string userId)
+    {
+        await Groups.AddToGroupAsync(Context.ConnectionId, userId);
     }
     
 }
