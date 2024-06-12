@@ -1,0 +1,6 @@
+@Postcards.Generator_HostAddress = http://localhost:5101
+
+GET {{Postcards.Generator_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

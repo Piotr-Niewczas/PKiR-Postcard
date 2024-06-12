@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.SignalR.Client;
-using Microsoft.EntityFrameworkCore;
 using Postcards.Worker.Data;
 
 namespace Postcards.Worker;
@@ -22,8 +21,9 @@ public class Program
 
         builder.Services.AddTransient<PostcardRepository>();
         builder.Services.AddTransient<IUpdateNotifier, SignalRUpdateNotifier>();
-        builder.Services.AddTransient<IPostcardGenerator>(serviceProvider => new LandscapePostcardGenerator(
-            builder.Configuration["urls"] ?? throw new InvalidOperationException("urls not found"),
+        builder.Services.AddTransient<IPostcardGenerator>(serviceProvider => new RemotePostcardGenerator(
+            builder.Configuration["generatorServiceUrl"] ??
+            throw new InvalidOperationException("generatorServiceUrl not found in configuration"),
             builder.Configuration["mainServiceUrl"] ??
             throw new InvalidOperationException("mainServiceUrl not found in configuration")));
 
@@ -40,10 +40,6 @@ public class Program
         }
 
         app.UseHttpsRedirection();
-
-        app.UseStaticFiles(); // For the wwwroot/img folder
-
-        app.MapGet("/", () => "Hello World!");
 
         app.Run();
     }

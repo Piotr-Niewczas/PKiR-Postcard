@@ -1,8 +1,8 @@
-﻿using ErrorOr;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Runtime.Versioning;
+using ErrorOr;
 
-namespace Postcards.Worker;
+namespace Postcards.Generator;
 
 public class LandscapePostcardGenerator(string thisServiceUrl, string baseImageHostUrl) : IPostcardGenerator
 {
