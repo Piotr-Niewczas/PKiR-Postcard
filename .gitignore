@@ -2,5 +2,4 @@ bin/
 obj/
 /packages/
 riderModule.iml
-/_ReSharper.Caches/!/Postcards.Worker/openAiApiKey.txt
-/Postcards.Worker/openAiApiKey.txt
+/Postcards.Worker/wwwroot/img/
