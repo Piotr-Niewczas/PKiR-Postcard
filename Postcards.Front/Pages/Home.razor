@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.SignalR.Client
 @using Postcards.Models
+@inject NavigationManager _navigationManager
 @inject IConfiguration Configuration
 
 
@@ -26,7 +27,7 @@
         {
             <label for="username">Input user name</label>
             <InputText id="username" @bind-Value="_userName"/>
-            <button @onclick="Login"> Login</button>
+            <button class="btn btn-primary" @onclick="Login"> Login</button>
         }
 
         if (_isUserLoggedIn)
@@ -68,7 +69,8 @@
     {
         <h1>Postcard generated!</h1>
         <img src="@_postcard.ImageUrl" alt="Postcard image"/>
-        <p>@_postcard.Text</p>
+        <br/>
+        <button class="btn btn-secondary" @onclick="ReloadPage"> Generate another</button>
     }
 
 </div>
@@ -163,4 +165,11 @@
         }
     }
 
+    void ReloadPage()
+    {
+        _navigationManager.NavigateTo(_navigationManager.Uri, true);
+    }
+
 }
+
+;
