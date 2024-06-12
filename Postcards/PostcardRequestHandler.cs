@@ -9,9 +9,9 @@ public class PostcardRequestHandler(string grpcAddress) : IPostcardRequestHandle
     {
         var channel = GrpcChannel.ForAddress(grpcAddress);
         var client = new PostcardService.PostcardServiceClient(channel);
-        
-        var request = new PostcardRequest { LocationId = locationId,Text = text, UserId = userId };
-        
+
+        var request = new PostcardRequest { LocationId = locationId, Text = text, UserId = userId };
+
         var reply = await client.GeneratePostcardRequestAsync(request);
         return reply.Status;
     }

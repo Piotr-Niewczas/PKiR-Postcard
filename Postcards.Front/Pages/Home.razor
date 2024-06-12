@@ -38,7 +38,6 @@ else
     <h1>Postcard generated!</h1>
     <img src="@_postcard.ImageUrl" alt="Postcard image"/>
     <p>@_postcard.Text</p>
-    
 }
 
 
@@ -69,7 +68,7 @@ else
             Console.WriteLine(encodedMsg);
         });
 
-        _hubConnection.On<Postcard>("ReceiveFullPostcard", handler: (postcard) =>
+        _hubConnection.On<Postcard>("ReceiveFullPostcard", (postcard) =>
         {
             Console.WriteLine($"Received ready postcard");
             _isGeneratingPostcard = false;

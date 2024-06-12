@@ -5,27 +5,27 @@ namespace Postcards;
 
 public class PostcardHub(ILogger<PostcardHub> logger, IPostcardRequestHandler postcardRequestHandler) : Hub
 {
-    Dictionary<string, string> _connectionIdToUserId = new();
-    
+    private Dictionary<string, string> _connectionIdToUserId = new();
+
     public override async Task OnConnectedAsync()
     {
         await Clients.All.SendAsync("ReceiveMessage", "System", $"{Context.ConnectionId} joined the chat");
     }
-    
+
     public async Task SendMessage(string message)
     {
-        await Clients.All.SendAsync("ReceiveMessage",  message);
+        await Clients.All.SendAsync("ReceiveMessage", message);
     }
-    
+
     public async Task GetGreet(string name)
     {
-        await Clients.All.SendAsync("ReceiveMessage",  name);
+        await Clients.All.SendAsync("ReceiveMessage", name);
     }
-    
-    public async Task AddPostcard(int locationId ,string text, string userId)
+
+    public async Task AddPostcard(int locationId, string text, string userId)
     {
         var response = await postcardRequestHandler.AddPostcard(locationId, text, userId);
-        
+
         await Clients.Caller.SendAsync("ReceiveMessage", "System", response);
     }
 
@@ -43,11 +43,10 @@ public class PostcardHub(ILogger<PostcardHub> logger, IPostcardRequestHandler po
     {
         await Clients.Group(postcard.UserId).SendAsync("ReceiveFullPostcard", postcard);
     }
-    
+
     public async Task AddToGroup(string userId)
     {
         await Groups.AddToGroupAsync(Context.ConnectionId, userId);
-        await Clients.Group(userId).SendAsync("ReceiveMessage", "System: ",$"Successfully joined the group {userId}.");
+        await Clients.Group(userId).SendAsync("ReceiveMessage", "System: ", $"Successfully joined the group {userId}.");
     }
-    
 }

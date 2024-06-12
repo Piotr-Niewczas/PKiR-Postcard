@@ -19,10 +19,7 @@ public class PostcardRepository
         await using var context = new AppDbContext();
         var postcard = await context.Postcards.FindAsync(postcardId);
 
-        if (postcard is null)
-        {
-            return Error.NotFound(description: "Postcard not found");
-        }
+        if (postcard is null) return Error.NotFound(description: "Postcard not found");
 
         postcard.FulfillmentDate = DateTime.UtcNow;
         postcard.ImageUrl = imageUrl;

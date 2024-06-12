@@ -11,7 +11,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-        
+
         // Add services to the container.
         builder.Services.AddGrpc();
         builder.Services.AddDbContext<AppDbContext>(options =>
@@ -19,7 +19,7 @@ public class Program
         builder.Services.AddScoped<PostcardRequestRepository>();
 
         var app = builder.Build();
-        
+
         // Configure the HTTP request pipeline.
         app.MapGrpcService<GreeterService>();
         app.MapGrpcService<PostcardRequestService>();
