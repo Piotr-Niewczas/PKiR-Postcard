@@ -44,6 +44,8 @@ public class Program
 
         app.UseHttpsRedirection();
 
+        app.UseStaticFiles(); // For the wwwroot/img folder
+
         // app.UseAuthorization();
 
 

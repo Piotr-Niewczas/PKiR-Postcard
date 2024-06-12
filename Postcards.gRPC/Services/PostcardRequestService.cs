@@ -8,7 +8,7 @@ public class PostcardRequestService(PostcardRequestRepository repository) : Post
     public override async Task<PostcardResponse> GeneratePostcardRequest(PostcardRequest request,
         ServerCallContext context)
     {
-        await repository.AddPostcard(request.LocationId, request.Text, request.UserId);
+        await repository.AddPostcard(request.BaseImgName, request.Text, request.UserId);
         return new PostcardResponse
         {
             Status = "Successfully added postcard request"

@@ -41,4 +41,12 @@
         <ProjectReference Include="..\Postcards.Models\Postcards.Models.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="wwwroot\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="wwwroot\img\lake.jpg"/>
+    </ItemGroup>
+
 </Project>

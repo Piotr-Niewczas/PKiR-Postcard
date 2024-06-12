@@ -2,5 +2,5 @@
 
 public interface IPostcardRequestHandler
 {
-    public Task<string> AddPostcard(int locationId, string text, string userId);
+    public Task<string> AddPostcard(string baseImgName, string text, string userId);
 }
