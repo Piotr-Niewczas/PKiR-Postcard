@@ -6,45 +6,96 @@
 
 <PageTitle>Home</PageTitle>
 
-@if (_postcard is null)
-{
-    if (!_isUserLoggedIn)
-    {
-        <label for="username">Input user name</label>
-        <InputText id="username" @bind-Value="_userName"/>
-        <button @onclick="Login"> Login </button>
+<style>
+    .radio-item {
+        margin-bottom: 10px;
+        background-color: #f2f2f2;
+        padding: 10px;
     }
 
-    if (_isUserLoggedIn)
-    {
-        if (_isGeneratingPostcard)
-        {
-            <div class="loader"></div>
-            <p>Generating postcard...</p>
-            <p>This may take a while</p>
-        }
-        else
-        {
-            <h1>Welcome, @_userName!</h1>
-            <p> Please input thr prompt to generate a postcard:</p>
-            <label for="text">Enter text</label>
-            <InputText id="text" @bind-Value="_postcardText"/>
-            <label for="baseImg">Enter baseimgname</label>
-            <InputText id="baseImg" @bind-Value="_postcardBaseImgName"/>
+    .column {
+        flex: 1;
+        padding: 10px;
+    }
+</style>
 
-            <button @onclick="GeneratePostcard"> Generate</button>
+<div>
+    @if (_postcard is null)
+    {
+        if (!_isUserLoggedIn)
+        {
+            <label for="username">Input user name</label>
+            <InputText id="username" @bind-Value="_userName"/>
+            <button @onclick="Login"> Login</button>
+        }
+
+        if (_isUserLoggedIn)
+        {
+            if (_isGeneratingPostcard)
+            {
+                <div class="loader"></div>
+                <p>Generating postcard...</p>
+                <p>This may take a while</p>
+            }
+            else
+            {
+                <h1>Welcome, @_userName!</h1>
+                <div class="column">
+                    <p> Please select an image and text</p>
+                    <label for="text">Enter text</label>
+                    <InputText id="text" @bind-Value="_postcardText"/>
+                </div>
+
+                <div class="column">
+                    <InputRadioGroup @bind-Value="_postcardBaseImgName">
+                        @foreach (var img in _baseImgs)
+                        {
+                            <div class="radio-item">
+                                <InputRadio Value="@img.FileName"/>
+                                @img.Name
+                                <img src="@($"{Configuration["mainApiUrl"]}/img/mini/{@img.FileName}")" alt="@img.Description"/>
+                                @img.Description
+                            </div>
+                        }
+                    </InputRadioGroup>
+                </div>
+
+                <button class="btn btn-primary" @onclick="GeneratePostcard"> Generate</button>
+            }
         }
     }
-}
-else
-{
-    <h1>Postcard generated!</h1>
-    <img src="@_postcard.ImageUrl" alt="Postcard image"/>
-    <p>@_postcard.Text</p>
-}
+    else
+    {
+        <h1>Postcard generated!</h1>
+        <img src="@_postcard.ImageUrl" alt="Postcard image"/>
+        <p>@_postcard.Text</p>
+    }
 
+</div>
 
 @code{
+
+    class BaseImg(string fileName, string description)
+    {
+        public string FileName { get; set; } = fileName;
+        public string Description { get; set; } = description;
+
+        public string Name
+        {
+            get
+            {
+                var temp = FileName.Split('.')[0];
+                return char.ToUpper(temp[0]) + temp[1..];
+            }
+        }
+    }
+
+    List<BaseImg> _baseImgs =
+    [
+        new BaseImg("lake.jpg", "A beautiful lake in the mountains"),
+        new BaseImg("field.jpg", "A field of grass"),
+        new BaseImg("warsaw.jpg", "Warsaw cityscape"),
+    ];
 
     bool _isUserLoggedIn;
     string _userName = "";
