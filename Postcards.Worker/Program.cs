@@ -19,6 +19,7 @@ public class Program
                 .WithUrl(builder.Configuration["mainServiceUrl"] + "/hubs/postcard")
                 .Build());
 
+        builder.Services.AddTransient<IConfiguration>(serviceProvider => builder.Configuration);
         builder.Services.AddTransient<PostcardRepository>();
         builder.Services.AddTransient<IUpdateNotifier, SignalRUpdateNotifier>();
         builder.Services.AddTransient<IPostcardGenerator>(serviceProvider => new RemotePostcardGenerator(

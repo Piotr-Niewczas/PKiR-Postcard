@@ -4,11 +4,11 @@ using Postcards.Models;
 
 namespace Postcards.Worker.Data;
 
-public class PostcardRepository
+public class PostcardRepository(IConfiguration configuration)
 {
     public async Task<List<Postcard>> GetEmptyPostcards(CancellationToken cancellationToken)
     {
-        await using var context = new AppDbContext();
+        await using var context = new AppDbContext(configuration);
         return (await context.Postcards
             .Where(x => string.IsNullOrEmpty(x.ImageUrl))
             .ToListAsync(cancellationToken))!;
@@ -16,7 +16,7 @@ public class PostcardRepository
 
     public async Task<ErrorOr<Postcard>> UpdatePostcard(int postcardId, string imageUrl)
     {
-        await using var context = new AppDbContext();
+        await using var context = new AppDbContext(configuration);
         var postcard = await context.Postcards.FindAsync(postcardId);
 
         if (postcard is null) return Error.NotFound(description: "Postcard not found");
