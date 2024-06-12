@@ -5,9 +5,9 @@ namespace Postcards.gRPC;
 
 public class PostcardRequestRepository(AppDbContext dbContext)
 {
-    public async Task AddPostcard(string prompt, string userId)
+    public async Task AddPostcard(int locationId, string text, string userId)
     {
-        dbContext.Postcards.Add(new Postcard(prompt, userId));
+        dbContext.Postcards.Add(new Postcard(locationId, text, userId));
         await dbContext.SaveChangesAsync();
     }
 }

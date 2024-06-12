@@ -12,8 +12,9 @@ service PostcardService {
 
 // The request message containing the prompt and the user's ID.
 message PostcardRequest {
-  string prompt = 1;
-  string userId = 2;
+  int32 locationId = 1;
+  string text = 2;
+  string userId = 3;
 }
 
 // The response message containing the status of the request.

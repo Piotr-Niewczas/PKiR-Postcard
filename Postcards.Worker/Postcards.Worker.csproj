@@ -33,4 +33,8 @@
       </None>
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="DallEPostcardGenerator.cs" />
+    </ItemGroup>
+
 </Project>

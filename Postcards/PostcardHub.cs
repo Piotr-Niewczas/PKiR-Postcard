@@ -22,9 +22,9 @@ public class PostcardHub(ILogger<PostcardHub> logger, IPostcardRequestHandler po
         await Clients.All.SendAsync("ReceiveMessage",  name);
     }
     
-    public async Task AddPostcard(string prompt, string userId)
+    public async Task AddPostcard(int locationId ,string text, string userId)
     {
-        var response = await postcardRequestHandler.AddPostcard(prompt, userId);
+        var response = await postcardRequestHandler.AddPostcard(locationId, text, userId);
         
         await Clients.Caller.SendAsync("ReceiveMessage", "System", response);
     }
