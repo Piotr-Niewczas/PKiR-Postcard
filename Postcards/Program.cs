@@ -12,12 +12,12 @@ public class Program
                 builder =>
                 {
                     builder
-                        .AllowAnyOrigin() 
+                        .AllowAnyOrigin()
                         .AllowAnyMethod()
                         .AllowAnyHeader();
                 });
         });
-        
+
         // Add services to the container.
 
         builder.Services.AddControllers();
@@ -34,7 +34,7 @@ public class Program
         var app = builder.Build();
 
         app.UseCors("AllowAllOrigins");
-        
+
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {

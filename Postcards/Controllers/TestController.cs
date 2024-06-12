@@ -6,7 +6,7 @@ namespace Postcards.Controllers;
 [Route("[controller]")]
 public class TestController(IPostcardRequestHandler postcardRequestHandler) : ControllerBase
 {
-    [HttpGet(template: "{name}", Name = "gRPC Test")]
+    [HttpGet("{name}", Name = "gRPC Test")]
     public async Task<IActionResult> Get(string name)
     {
         var response = await new GreetHandler().GetGreet(name);
