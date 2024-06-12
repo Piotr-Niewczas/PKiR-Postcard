@@ -20,11 +20,11 @@ public class PostcardGeneratorWorkerService(
             foreach (var postcard in postcards)
             {
                 // Generate the postcard
-                var generateResult = await generator.GeneratePostcard(postcard.Prompt);
+                var generateResult = await generator.GeneratePostcard(postcard.LocationId, postcard.Text);
                 if (generateResult.IsError)
                 {
                     logger.LogError("Failed to generate postcard {PostcardId} with prompt {Prompt}: {Error}",
-                        postcard.Id, postcard.Prompt, generateResult.Errors.ToString());
+                        postcard.Id, postcard.Text, generateResult.Errors.ToString());
                     continue;
                 }
 
@@ -41,7 +41,7 @@ public class PostcardGeneratorWorkerService(
                 successfullyUpdated.Add(updateResult.Value);
 
                 logger.LogInformation("Generated postcard {PostcardId} with prompt {Prompt}", postcard.Id,
-                    postcard.Prompt);
+                    postcard.Text);
             }
 
             if (successfullyUpdated.Count > 0 )
