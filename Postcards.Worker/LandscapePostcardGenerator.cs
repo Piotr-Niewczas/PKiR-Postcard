@@ -1,6 +1,5 @@
 ﻿using ErrorOr;
 using System.Drawing;
-using System.Net;
 using System.Runtime.Versioning;
 
 namespace Postcards.Worker;
@@ -31,10 +30,26 @@ public class LandscapePostcardGenerator(string thisServiceUrl, string baseImageH
         var graphics = Graphics.FromImage(bitmap);
 
         // Define text properties
-        var font = new Font("Comic Sans MS", 40, FontStyle.Bold, GraphicsUnit.Pixel);
         var color = Color.HotPink;
         var brush = new SolidBrush(color);
         var startPoint = new Point(50, 50);
+
+        // Define maximum font size
+        float maxFontSize = 40;
+
+        // Create a font with the maximum size
+        var font = new Font("Comic Sans MS", maxFontSize, FontStyle.Bold, GraphicsUnit.Pixel);
+
+        // Measure the text width
+        var textSize = graphics.MeasureString(text, font);
+
+        // Adjust the font size until the text fits within the image width
+        while (textSize.Width > (bitmap.Width - startPoint.X * 2))
+        {
+            maxFontSize--;
+            font = new Font("Comic Sans MS", maxFontSize, FontStyle.Bold, GraphicsUnit.Pixel);
+            textSize = graphics.MeasureString(text, font);
+        }
 
         // Draw the text onto the image
         graphics.DrawString(text, font, brush, startPoint);
