@@ -27,9 +27,12 @@
         {
             <h1>Welcome, @_userName!</h1>
             <p> Please input thr prompt to generate a postcard:</p>
-            <label for="prompt">Enter prompt</label>
-            <InputText id="prompt" @bind-Value="_prompt"/>
-            <button @onclick="GeneratePostcard"> Generate </button>
+            <label for="text">Enter text</label>
+            <InputText id="text" @bind-Value="_postcardText"/>
+            <label for="location">Enter prompt</label>
+            <InputNumber id="location" @bind-Value="_postcardLocationId"/>
+
+            <button disabled="@(_postcardText != "" && _postcardLocationId != 0)" @onclick="GeneratePostcard"> Generate</button>
         }
     }
 }
@@ -46,7 +49,8 @@ else
     bool _isUserLoggedIn;
     string _userName = "";
 
-    string _prompt = "";
+    int _postcardLocationId;
+    string _postcardText = "";
     bool _isGeneratingPostcard;
 
     Postcard? _postcard;
@@ -98,9 +102,9 @@ else
     {
         if (_hubConnection is not null)
         {
-            Console.WriteLine($"Generating postcard with prompt: {_prompt}");
+            Console.WriteLine($"Generating postcard with text: {_postcardText} and locationId: {_postcardLocationId}");
             _isGeneratingPostcard = true;
-            await _hubConnection.SendAsync("AddPostcard", _prompt, _userName);
+            await _hubConnection.SendAsync("AddPostcard", _postcardLocationId, _postcardText, _userName);
         }
         else
         {
