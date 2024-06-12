@@ -20,7 +20,7 @@ public class PostcardGeneratorWorkerService(
             foreach (var postcard in postcards)
             {
                 // Generate the postcard
-                var generateResult = await generator.GeneratePostcard(postcard.LocationId, postcard.Text);
+                var generateResult = await generator.GeneratePostcard(postcard.baseImgName, postcard.Text, postcard.Id);
                 if (generateResult.IsError)
                 {
                     logger.LogError("Failed to generate postcard {PostcardId} with prompt {Prompt}: {Error}",

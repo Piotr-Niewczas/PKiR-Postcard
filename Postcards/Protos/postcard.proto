@@ -12,7 +12,7 @@ service PostcardService {
 
 // The request message containing the prompt and the user's ID.
 message PostcardRequest {
-  int32 locationId = 1;
+  string baseImgName = 1;
   string text = 2;
   string userId = 3;
 }
